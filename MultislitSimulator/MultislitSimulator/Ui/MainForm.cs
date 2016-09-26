@@ -21,7 +21,12 @@ namespace MultislitSimulator.Ui
         {
             InitializeComponent();
 
-            this.multislitRenderingSurface1.Configuration = new MultislitConfiguration(2, 1, new[] { new WavelengthColorPair(600) });
+            this.RenderingSurface.Configuration = this.Configurator.Configuration;
+        }
+        
+        private void Configurator_ConfigurationChanged(object sender, EventArgs e)
+        {
+            this.RenderingSurface.Configuration = this.Configurator.Configuration;
         }
     }
 }
