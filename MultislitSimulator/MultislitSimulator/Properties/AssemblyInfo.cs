@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die einer Assembly zugeordnet sind.
 [assembly: AssemblyTitle("MultislitSimulator")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A program which simulates single-, double- or multislit interference patterns with a specified light source or visible light")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Stefan Baumann")]
 [assembly: AssemblyProduct("MultislitSimulator")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCopyright("Copyright © 2016 Stefan Baumann")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
