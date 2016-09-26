@@ -51,6 +51,9 @@
     <Compile Include="Physics\VisibleLightSpectrum.cs" />
     <Compile Include="Rendering\FastBitmap.cs" />
     <Compile Include="Rendering\FastColor.cs" />
+    <Compile Include="Rendering\MultislitRenderer\MultislitConfiguration.cs" />
+    <Compile Include="Rendering\MultislitRenderer\MultislitRenderer.cs" />
+    <Compile Include="Rendering\MultislitRenderer\WavelengthColorPair.cs" />
     <Compile Include="Rendering\RenderingSurfaceBase.cs">
       <SubType>Component</SubType>
     </Compile>
