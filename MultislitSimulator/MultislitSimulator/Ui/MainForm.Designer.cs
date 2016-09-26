@@ -85,7 +85,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.Name = "MainForm";
-            this.Text = "Multislit Simulator";
+            this.Text = "Multislit Simulator v0.1";
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();

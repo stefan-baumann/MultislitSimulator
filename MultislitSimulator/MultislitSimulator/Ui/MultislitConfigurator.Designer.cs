@@ -32,11 +32,11 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.LightModeComboBox = new System.Windows.Forms.ComboBox();
             this.LightSourceGroupBox = new System.Windows.Forms.GroupBox();
+            this.LightSourceFlowPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.AddLightSourceButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.SlitCountNumeric = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
-            this.AddLightSourceButton = new System.Windows.Forms.Button();
-            this.LightSourceFlowPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.LightSourceGroupBox.SuspendLayout();
@@ -72,6 +72,7 @@
             // LightModeComboBox
             // 
             this.LightModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.LightModeComboBox.Enabled = false;
             this.LightModeComboBox.FormattingEnabled = true;
             this.LightModeComboBox.Items.AddRange(new object[] {
             "Visible Light",
@@ -96,6 +97,29 @@
             this.LightSourceGroupBox.TabIndex = 0;
             this.LightSourceGroupBox.TabStop = false;
             this.LightSourceGroupBox.Text = "Light Source";
+            // 
+            // LightSourceFlowPanel
+            // 
+            this.LightSourceFlowPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.LightSourceFlowPanel.BackColor = System.Drawing.SystemColors.Window;
+            this.LightSourceFlowPanel.Location = new System.Drawing.Point(6, 21);
+            this.LightSourceFlowPanel.Name = "LightSourceFlowPanel";
+            this.LightSourceFlowPanel.Size = new System.Drawing.Size(317, 249);
+            this.LightSourceFlowPanel.TabIndex = 1;
+            // 
+            // AddLightSourceButton
+            // 
+            this.AddLightSourceButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.AddLightSourceButton.Location = new System.Drawing.Point(5, 275);
+            this.AddLightSourceButton.Name = "AddLightSourceButton";
+            this.AddLightSourceButton.Size = new System.Drawing.Size(319, 25);
+            this.AddLightSourceButton.TabIndex = 0;
+            this.AddLightSourceButton.Text = "+";
+            this.AddLightSourceButton.UseVisualStyleBackColor = true;
+            this.AddLightSourceButton.Click += new System.EventHandler(this.AddLightSourceButton_Click);
             // 
             // groupBox1
             // 
@@ -139,29 +163,6 @@
             this.label1.Size = new System.Drawing.Size(61, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Slit Count:";
-            // 
-            // AddLightSourceButton
-            // 
-            this.AddLightSourceButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.AddLightSourceButton.Location = new System.Drawing.Point(5, 275);
-            this.AddLightSourceButton.Name = "AddLightSourceButton";
-            this.AddLightSourceButton.Size = new System.Drawing.Size(319, 25);
-            this.AddLightSourceButton.TabIndex = 0;
-            this.AddLightSourceButton.Text = "+";
-            this.AddLightSourceButton.UseVisualStyleBackColor = true;
-            this.AddLightSourceButton.Click += new System.EventHandler(this.AddLightSourceButton_Click);
-            // 
-            // LightSourceFlowPanel
-            // 
-            this.LightSourceFlowPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.LightSourceFlowPanel.BackColor = System.Drawing.SystemColors.Window;
-            this.LightSourceFlowPanel.Location = new System.Drawing.Point(6, 21);
-            this.LightSourceFlowPanel.Name = "LightSourceFlowPanel";
-            this.LightSourceFlowPanel.Size = new System.Drawing.Size(317, 249);
-            this.LightSourceFlowPanel.TabIndex = 1;
             // 
             // MultislitConfigurator
             // 
