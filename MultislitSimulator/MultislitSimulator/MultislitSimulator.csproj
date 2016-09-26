@@ -53,6 +53,9 @@
     <Compile Include="Rendering\FastColor.cs" />
     <Compile Include="Rendering\MultislitRenderer\MultislitConfiguration.cs" />
     <Compile Include="Rendering\MultislitRenderer\MultislitRenderer.cs" />
+    <Compile Include="Rendering\MultislitRenderer\MultislitRenderingSurface.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Rendering\MultislitRenderer\WavelengthColorPair.cs" />
     <Compile Include="Rendering\RenderingSurfaceBase.cs">
       <SubType>Component</SubType>

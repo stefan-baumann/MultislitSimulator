@@ -3,10 +3,10 @@
  * GitHub Repository: https://github.com/stefan-baumann/MultislitSimulator
  */
 
+using MultislitSimulator.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -20,6 +20,8 @@ namespace MultislitSimulator.Ui
         public MainForm()
         {
             InitializeComponent();
+
+            this.multislitRenderingSurface1.Configuration = new MultislitConfiguration(2, 1, new[] { new WavelengthColorPair(600) });
         }
     }
 }
