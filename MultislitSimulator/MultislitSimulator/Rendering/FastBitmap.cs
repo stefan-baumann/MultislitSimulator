@@ -167,6 +167,8 @@ namespace MultislitSimulator.Rendering
         /// </value>
         protected internal BitmapData BitmapData { get; set; }
 
+        private object BitmapLockLockObject = new object();
+
         /// <summary>
         /// Locks the internal bitmap for access to its data.
         /// </summary>
@@ -174,13 +176,19 @@ namespace MultislitSimulator.Rendering
         {
             if (!this.Locked)
             {
-                if (this.InternalBitmap == null)
+                lock (this.BitmapLockLockObject)
                 {
-                    throw new NullReferenceException("Unable to lock the internal bitmap.");
-                }
+                    if (!this.Locked)
+                    {
+                        if (this.InternalBitmap == null || this.IsDisposed)
+                        {
+                            throw new NullReferenceException("Unable to lock the internal bitmap.");
+                        }
 
-                this.BitmapData = this.InternalBitmap.LockBits(new Rectangle(0, 0, this.InternalBitmap.Width, this.InternalBitmap.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
-                this.Locked = true;
+                        this.BitmapData = this.InternalBitmap.LockBits(new Rectangle(0, 0, this.InternalBitmap.Width, this.InternalBitmap.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+                        this.Locked = true;
+                    }
+                }
             }
         }
 
@@ -191,14 +199,20 @@ namespace MultislitSimulator.Rendering
         {
             if (this.Locked)
             {
-                if (this.InternalBitmap == null)
+                lock (this.BitmapLockLockObject)
                 {
-                    throw new NullReferenceException("Unable to unlock the internal bitmap.");
-                }
+                    if (this.Locked)
+                    {
+                        if (this.InternalBitmap == null || this.IsDisposed)
+                        {
+                            throw new NullReferenceException("Unable to unlock the internal bitmap.");
+                        }
 
-                this.InternalBitmap.UnlockBits(this.BitmapData);
-                this.Locked = false;
-                this.BitmapData = null;
+                        this.InternalBitmap.UnlockBits(this.BitmapData);
+                        this.Locked = false;
+                        this.BitmapData = null;
+                    }
+                }
             }
         }
 
@@ -234,19 +248,22 @@ namespace MultislitSimulator.Rendering
         /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (!this.IsDisposed)
+            lock (this.BitmapLockLockObject)
             {
-                if (disposing)
+                if (!this.IsDisposed)
                 {
-                    if (this.Locked)
+                    if (disposing)
                     {
-                        this.UnlockBitmap();
+                        if (this.Locked)
+                        {
+                            this.UnlockBitmap();
+                        }
+
+                        this.InternalBitmap.Dispose();
                     }
 
-                    this.InternalBitmap.Dispose();
+                    this.IsDisposed = true;
                 }
-
-                this.IsDisposed = true;
             }
         }
 
