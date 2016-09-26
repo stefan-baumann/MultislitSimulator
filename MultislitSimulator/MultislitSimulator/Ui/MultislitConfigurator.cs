@@ -46,8 +46,7 @@ namespace MultislitSimulator.Ui
             }
             else
             {
-                //Todo: Custom light source
-                lightSources = Enumerable.Empty<WavelengthColorPair>();
+                lightSources = this.CreateCustomLightSource();
             }
 
             this.Configuration = new Rendering.MultislitConfiguration(slits, brightness, lightSources);
@@ -64,6 +63,16 @@ namespace MultislitSimulator.Ui
             for (double w = start, i = 0; i < quality; w += step, i++)
             {
                 yield return new WavelengthColorPair(w);
+            }
+
+            yield break;
+        }
+
+        protected IEnumerable<WavelengthColorPair> CreateCustomLightSource()
+        {
+            foreach (LightColorSelector selector in this.LightSourceFlowPanel.Controls.OfType<LightColorSelector>())
+            {
+                yield return selector.Selection;
             }
 
             yield break;
@@ -93,6 +102,20 @@ namespace MultislitSimulator.Ui
 
         private void SlitCountNumeric_ValueChanged(object sender, EventArgs e)
         {
+            this.RecreateConfiguration();
+        }
+
+        private void AddLightSourceButton_Click(object sender, EventArgs e)
+        {
+            var selector = new LightColorSelector();
+            selector.Updated += (s, a) => this.RecreateConfiguration();
+            selector.Remove += (s, a) =>
+            {
+                this.LightSourceFlowPanel.Controls.Remove(selector);
+                this.RecreateConfiguration();
+            };
+
+            this.LightSourceFlowPanel.Controls.Add(selector);
             this.RecreateConfiguration();
         }
     }

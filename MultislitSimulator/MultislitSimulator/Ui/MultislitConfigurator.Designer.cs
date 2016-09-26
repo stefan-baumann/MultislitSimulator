@@ -30,13 +30,16 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.LightSourceGroupBox = new System.Windows.Forms.GroupBox();
             this.LightModeComboBox = new System.Windows.Forms.ComboBox();
+            this.LightSourceGroupBox = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.SlitCountNumeric = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.AddLightSourceButton = new System.Windows.Forms.Button();
+            this.LightSourceFlowPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.LightSourceGroupBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SlitCountNumeric)).BeginInit();
             this.SuspendLayout();
@@ -66,19 +69,6 @@
             this.panel1.Size = new System.Drawing.Size(339, 317);
             this.panel1.TabIndex = 0;
             // 
-            // LightSourceGroupBox
-            // 
-            this.LightSourceGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.LightSourceGroupBox.Location = new System.Drawing.Point(5, 7);
-            this.LightSourceGroupBox.Margin = new System.Windows.Forms.Padding(5);
-            this.LightSourceGroupBox.Name = "LightSourceGroupBox";
-            this.LightSourceGroupBox.Size = new System.Drawing.Size(329, 305);
-            this.LightSourceGroupBox.TabIndex = 0;
-            this.LightSourceGroupBox.TabStop = false;
-            this.LightSourceGroupBox.Text = "Light Source";
-            // 
             // LightModeComboBox
             // 
             this.LightModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -91,6 +81,21 @@
             this.LightModeComboBox.Size = new System.Drawing.Size(121, 21);
             this.LightModeComboBox.TabIndex = 0;
             this.LightModeComboBox.SelectedIndexChanged += new System.EventHandler(this.LightModeComboBox_SelectedIndexChanged);
+            // 
+            // LightSourceGroupBox
+            // 
+            this.LightSourceGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.LightSourceGroupBox.Controls.Add(this.LightSourceFlowPanel);
+            this.LightSourceGroupBox.Controls.Add(this.AddLightSourceButton);
+            this.LightSourceGroupBox.Location = new System.Drawing.Point(5, 7);
+            this.LightSourceGroupBox.Margin = new System.Windows.Forms.Padding(5);
+            this.LightSourceGroupBox.Name = "LightSourceGroupBox";
+            this.LightSourceGroupBox.Size = new System.Drawing.Size(329, 305);
+            this.LightSourceGroupBox.TabIndex = 0;
+            this.LightSourceGroupBox.TabStop = false;
+            this.LightSourceGroupBox.Text = "Light Source";
             // 
             // groupBox1
             // 
@@ -106,15 +111,6 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Slit Configuration";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 24);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(61, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Slit Count:";
             // 
             // SlitCountNumeric
             // 
@@ -135,6 +131,38 @@
             0});
             this.SlitCountNumeric.ValueChanged += new System.EventHandler(this.SlitCountNumeric_ValueChanged);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 24);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(61, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Slit Count:";
+            // 
+            // AddLightSourceButton
+            // 
+            this.AddLightSourceButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.AddLightSourceButton.Location = new System.Drawing.Point(5, 275);
+            this.AddLightSourceButton.Name = "AddLightSourceButton";
+            this.AddLightSourceButton.Size = new System.Drawing.Size(319, 25);
+            this.AddLightSourceButton.TabIndex = 0;
+            this.AddLightSourceButton.Text = "+";
+            this.AddLightSourceButton.UseVisualStyleBackColor = true;
+            this.AddLightSourceButton.Click += new System.EventHandler(this.AddLightSourceButton_Click);
+            // 
+            // LightSourceFlowPanel
+            // 
+            this.LightSourceFlowPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.LightSourceFlowPanel.BackColor = System.Drawing.SystemColors.Window;
+            this.LightSourceFlowPanel.Location = new System.Drawing.Point(6, 21);
+            this.LightSourceFlowPanel.Name = "LightSourceFlowPanel";
+            this.LightSourceFlowPanel.Size = new System.Drawing.Size(317, 249);
+            this.LightSourceFlowPanel.TabIndex = 1;
+            // 
             // MultislitConfigurator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -146,6 +174,7 @@
             this.Size = new System.Drawing.Size(690, 323);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.LightSourceGroupBox.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SlitCountNumeric)).EndInit();
@@ -162,5 +191,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.NumericUpDown SlitCountNumeric;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button AddLightSourceButton;
+        private System.Windows.Forms.FlowLayoutPanel LightSourceFlowPanel;
     }
 }

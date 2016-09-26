@@ -62,6 +62,12 @@
     <Compile Include="Rendering\RenderingSurfaceBase.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Ui\LightColorSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ui\LightColorSelector.Designer.cs">
+      <DependentUpon>LightColorSelector.cs</DependentUpon>
+    </Compile>
     <Compile Include="Ui\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -77,6 +83,9 @@
       <DependentUpon>MultislitConfigurator.cs</DependentUpon>
     </Compile>
     <Compile Include="Utilities\Extensions.cs" />
+    <EmbeddedResource Include="Ui\LightColorSelector.resx">
+      <DependentUpon>LightColorSelector.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Ui\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
