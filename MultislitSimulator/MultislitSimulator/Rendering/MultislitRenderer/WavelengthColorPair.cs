@@ -10,6 +10,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+#pragma warning disable CS0660
+#pragma warning disable CS0661
+
 namespace MultislitSimulator.Rendering
 {
     /// <summary>
@@ -61,6 +64,22 @@ namespace MultislitSimulator.Rendering
         public override string ToString()
         {
             return $"WavelengthColorPair [ Wavelength: {this.Wavelength:#.000}: Color: {this.Color} ]";
+        }
+
+        
+
+        public static bool operator ==(WavelengthColorPair left, WavelengthColorPair right)
+        {
+            if ((object)left == null)
+            {
+                return (object)right == null;
+            }
+            return (object)right != null && left.Wavelength == right.Wavelength && left.Color == right.Color;
+        }
+
+        public static bool operator !=(WavelengthColorPair left, WavelengthColorPair right)
+        {
+            return !(left == right);
         }
     }
 }

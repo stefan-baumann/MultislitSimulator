@@ -10,6 +10,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+#pragma warning disable CS0660
+#pragma warning disable CS0661
+
 namespace MultislitSimulator.Rendering
 {
     /// <summary>
@@ -53,5 +56,21 @@ namespace MultislitSimulator.Rendering
         /// The light sources.
         /// </value>
         public IEnumerable<WavelengthColorPair> LightSources { get; protected set; }
+
+        
+
+        public static bool operator ==(MultislitConfiguration left, MultislitConfiguration right)
+        {
+            if ((object)left == null)
+            {
+                return (object)right == null;
+            }
+            return (object)right != null && left.Slits == right.Slits && left.Brightness == right.Brightness && left.LightSources.SequenceEqual(right.LightSources);
+        }
+
+        public static bool operator !=(MultislitConfiguration left, MultislitConfiguration right)
+        {
+            return !(left == right);
+        }
     }
 }
