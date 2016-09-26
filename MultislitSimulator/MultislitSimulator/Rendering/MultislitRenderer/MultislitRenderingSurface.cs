@@ -49,11 +49,11 @@ namespace MultislitSimulator.Rendering
                     throw new NullReferenceException("The configuration must not be null.");
                 }
 
-                if (value != this.configuration)
-                {
+                //if (value != this.configuration)
+                //{
                     this.configuration = value;
                     this.ReRender();
-                }
+                //}
             }
         }
 
