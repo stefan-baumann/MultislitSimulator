@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MultislitSimulator.Utilities;
 
 namespace MultislitSimulator.Rendering
 {
@@ -38,7 +39,6 @@ namespace MultislitSimulator.Rendering
         /// <returns>A rendering of the specified multislit configuration</returns>
         public static Bitmap Render(MultislitConfiguration configuration, Size size, int quality)
         {
-            double colorRadius = 1;
             double[] yBrightnessFactors = MultislitRenderer.CalculateYBrightnessDistribution(configuration, size.Height);
 
             using (FastBitmap target = new FastBitmap(size, Color.FromArgb(10, 10, 10)))
@@ -51,7 +51,7 @@ namespace MultislitSimulator.Rendering
                         for (int ix = i * chunkSize; ix < Math.Min(i * chunkSize + chunkSize, size.Width); ix++)
                         {
                             double x = (ix - size.Width * 0.5) / configuration.Scale;
-                            RgbColor xColor = configuration.Brightness * MultislitRenderer.CalculateColorAt(configuration, x, colorRadius, quality);
+                            RgbColor xColor = configuration.Brightness * MultislitRenderer.CalculateColorAt(configuration, x, 1, quality);
 
                             for (int iy = 0; iy < size.Height; iy++)
                             {
@@ -60,7 +60,7 @@ namespace MultislitSimulator.Rendering
                                     return;
                                 }
                                 
-                                target[ix, iy] = yBrightnessFactors[iy] * xColor; //BGR?
+                                target[ix, iy] = yBrightnessFactors[iy] * xColor;
                             }
                         }
                     });
@@ -69,6 +69,47 @@ namespace MultislitSimulator.Rendering
                 return (Bitmap)target.InternalBitmap.Clone();
             }
         }
+
+
+        public static Bitmap RenderHighRes(MultislitConfiguration configuration, Size size, ProgressProvider progress)
+        {
+            double[] yBrightnessFactors = MultislitRenderer.CalculateYBrightnessDistribution(configuration, size.Height);
+
+            using (FastBitmap target = new FastBitmap(size, Color.FromArgb(10, 10, 10)))
+            {
+                int chunkSize = 10;
+                int finishedChunks = 0;
+                double chunkFactor = ((double)chunkSize / size.Width);
+                if (configuration.LightSources.Any())
+                {
+                    Parallel.For(0, (int)Math.Ceiling(size.Width / (double)chunkSize), i =>
+                    {
+                        for (int ix = i * chunkSize; ix < Math.Min(i * chunkSize + chunkSize, size.Width); ix++)
+                        {
+                            double x = (ix - size.Width * 0.5) / configuration.Scale;
+                            RgbColor xColor = configuration.Brightness * MultislitRenderer.CalculateColorAt(configuration, x, 1, 250);
+
+                            for (int iy = 0; iy < size.Height; iy++)
+                            {
+                                if (target == null || target.IsDisposed)
+                                {
+                                    return;
+                                }
+
+                                target[ix, iy] = yBrightnessFactors[iy] * xColor;
+                            }
+                        }
+
+                        finishedChunks++;
+                        progress.Progress = chunkFactor * finishedChunks;
+                    });
+                }
+
+                return (Bitmap)target.InternalBitmap.Clone();
+            }
+        }
+
+
 
         /// <summary>
         /// Calculates the overall color at a specific location.

@@ -41,7 +41,7 @@ namespace MultislitSimulator.Rendering
         /// <value>
         /// The amount of slits.
         /// </value>
-        public int Slits { get; protected set; }
+        public int Slits { get; protected internal set; }
 
         /// <summary>
         /// Returns the display scale.
@@ -49,7 +49,7 @@ namespace MultislitSimulator.Rendering
         /// <value>
         /// The display scale.
         /// </value>
-        public double Scale { get; protected set; }
+        public double Scale { get; protected internal set; }
 
         /// <summary>
         /// Returns the overall brightness.
@@ -57,7 +57,7 @@ namespace MultislitSimulator.Rendering
         /// <value>
         /// The overall brightness.
         /// </value>
-        public double Brightness { get; protected set; }
+        public double Brightness { get; protected internal set; }
 
         /// <summary>
         /// Returns the light sources.
@@ -65,6 +65,6 @@ namespace MultislitSimulator.Rendering
         /// <value>
         /// The light sources.
         /// </value>
-        public IEnumerable<WavelengthColorPair> LightSources { get; protected set; }
+        public IEnumerable<WavelengthColorPair> LightSources { get; protected internal set; }
     }
 }

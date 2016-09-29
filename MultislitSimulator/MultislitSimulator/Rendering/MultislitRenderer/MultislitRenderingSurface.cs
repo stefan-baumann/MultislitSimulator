@@ -132,7 +132,7 @@ namespace MultislitSimulator.Rendering
         /// <returns>The current rendering of the simulation.</returns>
         protected virtual Bitmap RenderInternal()
         {
-            return MultislitRenderer.Render(this.configuration, this.Size, 1);
+            return MultislitRenderer.Render(this.configuration, this.Size, 4);
         }
 
 
