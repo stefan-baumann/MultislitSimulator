@@ -72,7 +72,6 @@
             // LightModeComboBox
             // 
             this.LightModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.LightModeComboBox.Enabled = false;
             this.LightModeComboBox.FormattingEnabled = true;
             this.LightModeComboBox.Items.AddRange(new object[] {
             "Visible Light",
