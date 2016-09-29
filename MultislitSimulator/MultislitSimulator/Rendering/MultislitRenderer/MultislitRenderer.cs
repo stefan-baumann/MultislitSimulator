@@ -52,24 +52,32 @@ namespace MultislitSimulator.Rendering
         public static Bitmap Render(MultislitConfiguration configuration, Size size, double scale, int quality)
         {
             double colorRadius = 1 / scale;
-            double[] yBrightnessFactors = CalculateYBrightnessDistribution(configuration, size.Height, scale, colorRadius, quality);
+            double[] yBrightnessFactors = MultislitRenderer.CalculateYBrightnessDistribution(configuration, size.Height, scale, colorRadius, quality);
 
             using (FastBitmap target = new FastBitmap(size, Color.FromArgb(10, 10, 10)))
             {
                 int chunkSize = 50;
-                Parallel.For(0, (int)Math.Ceiling(size.Width / (double)chunkSize), i =>
+                if (configuration.LightSources.Any())
                 {
-                    for (int ix = i * chunkSize; ix < Math.Min(i * chunkSize + chunkSize, size.Width); ix++)
+                    Parallel.For(0, (int)Math.Ceiling(size.Width / (double)chunkSize), i =>
                     {
-                        double x = (ix - size.Width * 0.5) / scale;
-                        RgbColor xColor = configuration.Brightness * MultislitRenderer.CalculateColorAt(configuration, x, colorRadius, quality);
-
-                        for (int iy = 0; iy < size.Height; iy++)
+                        for (int ix = i * chunkSize; ix < Math.Min(i * chunkSize + chunkSize, size.Width); ix++)
                         {
-                            target[ix, iy] = yBrightnessFactors[iy] * xColor;
+                            double x = (ix - size.Width * 0.5) / scale;
+                            RgbColor xColor = configuration.Brightness * MultislitRenderer.CalculateColorAt(configuration, x, colorRadius, quality);
+
+                            for (int iy = 0; iy < size.Height; iy++)
+                            {
+                                if (target == null || target.IsDisposed)
+                                {
+                                    return;
+                                }
+                                
+                                target[ix, iy] = yBrightnessFactors[iy] * xColor; //BGR?
+                            }
                         }
-                    }
-                });
+                    });
+                }
 
                 return (Bitmap)target.InternalBitmap.Clone();
             }
