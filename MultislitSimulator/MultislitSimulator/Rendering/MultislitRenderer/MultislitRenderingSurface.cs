@@ -112,11 +112,11 @@ namespace MultislitSimulator.Rendering
                         this.Rendering = false;
                     }));
                 }
-                catch (ThreadAbortException e)
+                catch (ThreadAbortException)
                 {
                     //Is thrown when the thread is aborted due to another re-rendering starting; just swallow the exception
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     //Swallow the exception for now (for improved user experience) - will probably add a proper exception handling method later on
                 }
@@ -137,7 +137,7 @@ namespace MultislitSimulator.Rendering
 
 
 
-        private object CurrentStateLockObject = new object();
+        private readonly object currentStateLockObject = new object();
         private Bitmap currentState = null;
 
         /// <summary>
@@ -150,14 +150,14 @@ namespace MultislitSimulator.Rendering
         {
             get
             {
-                lock (this.CurrentStateLockObject)
+                lock (this.currentStateLockObject)
                 {
                     return this.currentState;
                 }
             }
             set
             {
-                lock (this.CurrentStateLockObject)
+                lock (this.currentStateLockObject)
                 {
                     if (this.currentState != value && this.currentState != null)
                     {
