@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,6 +34,14 @@ namespace MultislitSimulator.Ui
             this.ConfigurationChanged?.Invoke(this, EventArgs.Empty);
         }
 
+        public event EventHandler SaveCurrent;
+        protected void OnSaveCurrent()
+        {
+            this.SaveCurrent?.Invoke(this, EventArgs.Empty);
+        }
+
+
+
         protected void RecreateConfiguration()
         {
             int slits = (int)this.SlitCountNumeric.Value;
@@ -52,8 +61,6 @@ namespace MultislitSimulator.Ui
             }
 
             this.Configuration = new MultislitConfiguration(slits, scale, brightness, lightSources);
-
-            this.OnConfigurationChanged();
         }
 
         protected IEnumerable<WavelengthColorPair> CreateVisibleLightSource(int quality)
@@ -100,6 +107,7 @@ namespace MultislitSimulator.Ui
             }
 
             this.RecreateConfiguration();
+            this.OnConfigurationChanged();
         }
 
         private void AddLightSourceButton_Click(object sender, EventArgs e)
@@ -114,21 +122,46 @@ namespace MultislitSimulator.Ui
 
             this.LightSourceFlowPanel.Controls.Add(selector);
             this.RecreateConfiguration();
+            this.OnConfigurationChanged();
         }
 
         private void ScaleNumeric_ValueChanged(object sender, EventArgs e)
         {
             this.RecreateConfiguration();
+            this.OnConfigurationChanged();
         }
 
         private void BrightnessNumeric_ValueChanged(object sender, EventArgs e)
         {
             this.RecreateConfiguration();
+            this.OnConfigurationChanged();
         }
 
         private void SlitCountNumeric_ValueChanged(object sender, EventArgs e)
         {
             this.RecreateConfiguration();
+            this.OnConfigurationChanged();
+        }
+
+        private void GitHubLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://github.com/stefan-baumann/MultislitSimulator");
+        }
+
+        private void EmailLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("mailto:stefan-baumann@outlook.com");
+        }
+
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            this.OnSaveCurrent();
+        }
+
+        private void HighResRenderButton_Click(object sender, EventArgs e)
+        {
+            this.RecreateConfiguration();
+            new HighResRenderDialog(this.Configuration).ShowDialog();
         }
     }
 }

@@ -29,5 +29,10 @@ namespace MultislitSimulator.Ui
         {
             this.RenderingSurface.Configuration = this.Configurator.Configuration;
         }
+
+        private void Configurator_SaveCurrent(object sender, EventArgs e)
+        {
+            ImageSavingHelper.Save(this.RenderingSurface.RenderToBitmap());
+        }
     }
 }

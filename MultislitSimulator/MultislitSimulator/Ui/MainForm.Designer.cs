@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.RenderingSurface = new MultislitSimulator.Rendering.MultislitRenderingSurface();
             this.Configurator = new MultislitSimulator.Ui.MultislitConfigurator();
@@ -40,6 +41,7 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -51,8 +53,9 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.Configurator);
+            this.splitContainer1.Panel2MinSize = 260;
             this.splitContainer1.Size = new System.Drawing.Size(734, 511);
-            this.splitContainer1.SplitterDistance = 243;
+            this.splitContainer1.SplitterDistance = 247;
             this.splitContainer1.TabIndex = 0;
             // 
             // RenderingSurface
@@ -61,7 +64,7 @@
             this.RenderingSurface.Dock = System.Windows.Forms.DockStyle.Fill;
             this.RenderingSurface.Location = new System.Drawing.Point(0, 0);
             this.RenderingSurface.Name = "RenderingSurface";
-            this.RenderingSurface.Size = new System.Drawing.Size(734, 243);
+            this.RenderingSurface.Size = new System.Drawing.Size(734, 247);
             this.RenderingSurface.TabIndex = 0;
             this.RenderingSurface.Text = "multislitRenderingSurface1";
             // 
@@ -72,9 +75,10 @@
             this.Configurator.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.Configurator.Location = new System.Drawing.Point(0, 0);
             this.Configurator.Name = "Configurator";
-            this.Configurator.Size = new System.Drawing.Size(734, 264);
+            this.Configurator.Size = new System.Drawing.Size(734, 260);
             this.Configurator.TabIndex = 0;
             this.Configurator.ConfigurationChanged += new System.EventHandler(this.Configurator_ConfigurationChanged);
+            this.Configurator.SaveCurrent += new System.EventHandler(this.Configurator_SaveCurrent);
             // 
             // MainForm
             // 
@@ -84,8 +88,9 @@
             this.ClientSize = new System.Drawing.Size(734, 511);
             this.Controls.Add(this.splitContainer1);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
-            this.Text = "Multislit Simulator v0.1";
+            this.Text = "Multislit Simulator";
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
