@@ -123,8 +123,7 @@ namespace MultislitSimulator.Rendering
         /// The height of this <see cref="FastBitmap" />.
         /// </value>
         public int Height { get; protected set; }
-
-        private object pixelAccessLock = new object();
+        
         /// <summary>
         /// Gets the <see cref="FastColor" /> value at the specified coordinates of this <see cref="FastBitmap" />.
         /// </summary>
@@ -149,53 +148,44 @@ namespace MultislitSimulator.Rendering
                     throw new ArgumentOutOfRangeException("y");
                 }
 
-                //lock (this.PixelAccessLock)
+                if (!this.Locked)
                 {
-                    if (!this.Locked)
-                    {
-                        this.LockBitmap();
-                    }
-
-                    byte* pointer = ((byte*)this.BitmapData.Scan0 + y * this.BitmapData.Stride + x * 3);
-                    if (FastBitmap.IsRgb)
-                    {
-                        return new FastColor(pointer[2], pointer[1], pointer[0]);
-                    }
-                    else
-                    {
-                        return ((FastColor*)pointer)[0];
-                    }
+                    this.LockBitmap();
                 }
+
+                byte* pointer = (byte*)this.BitmapData.Scan0 + y * this.BitmapData.Stride + x * 3;
+                if (FastBitmap.IsRgb)
+                {
+                    return new FastColor(pointer[2], pointer[1], pointer[0]);
+                }
+                return ((FastColor*)pointer)[0];
             }
             set
             {
                 if (x < 0 || x >= this.Width)
                 {
-                    throw new ArgumentOutOfRangeException("x");
+                    throw new ArgumentOutOfRangeException(nameof(x));
                 }
                 if (y < 0 || y >= this.Height)
                 {
-                    throw new ArgumentOutOfRangeException("y");
+                    throw new ArgumentOutOfRangeException(nameof(x));
                 }
 
-                //lock (this.PixelAccessLock)
+                if (!this.Locked)
                 {
-                    if (!this.Locked)
-                    {
-                        this.LockBitmap();
-                    }
-                    
-                    byte* pointer = ((byte*)this.BitmapData.Scan0 + y * this.BitmapData.Stride + x * 3);
-                    if (FastBitmap.IsRgb)
-                    {
-                        pointer[2] = value.R;
-                        pointer[1] = value.G;
-                        pointer[0] = value.B;
-                    }
-                    else
-                    {
-                        ((FastColor*)pointer)[0] = value;
-                    }
+                    this.LockBitmap();
+                }
+
+                byte* pointer = ((byte*)this.BitmapData.Scan0 + y * this.BitmapData.Stride + x * 3);
+                if (FastBitmap.IsRgb)
+                {
+                    pointer[2] = value.R;
+                    pointer[1] = value.G;
+                    pointer[0] = value.B;
+                }
+                else
+                {
+                    ((FastColor*)pointer)[0] = value;
                 }
             }
         }

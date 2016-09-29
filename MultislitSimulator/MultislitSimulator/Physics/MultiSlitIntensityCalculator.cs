@@ -25,8 +25,8 @@ namespace MultislitSimulator.Physics
         /// <param name="wavelength">The light wavelength.</param>
         /// <param name="n">The number of slits.</param>
         /// <param name="x">The location (the horizontal distance from the middle of the screen).</param>
-        /// <param name="radius">The radius in which the values should be calcualted.</param>
-        /// <returns></returns>
+        /// <param name="radius">The radius in which the values should be calculated.</param>
+        /// <returns>The light intensity at the specified location.</returns>
         public static double CalculateIntensity(double wavelength, double n, double x, double radius)
         {
             return MultiSlitIntensityCalculator.CalculateIntensity(wavelength, n, x, radius, 5);
@@ -38,9 +38,9 @@ namespace MultislitSimulator.Physics
         /// <param name="wavelength">The light wavelength.</param>
         /// <param name="n">The number of slits.</param>
         /// <param name="x">The location (the horizontal distance from the middle of the screen).</param>
-        /// <param name="radius">The radius in which the values should be calcualted.</param>
+        /// <param name="radius">The radius in which the values should be calculated.</param>
         /// <param name="iterations">The iteration count - the higher it is, the higher the precision.</param>
-        /// <returns></returns>
+        /// <returns>The light intensity at the specified location.</returns>
         public static double CalculateIntensity(double wavelength, double n, double x, double radius, int iterations)
         {
             double step = (2 * radius) / iterations;
