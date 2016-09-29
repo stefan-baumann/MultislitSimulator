@@ -47,11 +47,11 @@ namespace MultislitSimulator.Physics
             List<double> results = new List<double>();
             for (double x1 = x - radius; x1 <= x + radius; x1 += step)
             {
-                double xx = (0.000025 * wavelength) * x1;
-                double y = (1 / Math.Pow(n, 2)) * Math.Pow(Math.Sin(.25 * Math.PI * xx) / (.25 * Math.PI * xx), 2) * Math.Pow(Math.Sin(n * Math.PI * xx) / Math.Sin(Math.PI * xx), 2);
-                if (!double.IsNaN(y))
+                double xx = (7.5 / wavelength) * x1;
+                double i = (1 / Math.Pow(n, 2)) * Math.Pow(Math.Sin(.25 * Math.PI * xx) / (.25 * Math.PI * xx), 2) * Math.Pow(Math.Sin(n * Math.PI * xx) / Math.Sin(Math.PI * xx), 2);
+                if (!double.IsNaN(i))
                 {
-                    results.Add(y.Clamp(0, 1));
+                    results.Add(i.Clamp(0, 1));
                 }
             }
 
