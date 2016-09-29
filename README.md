@@ -1,2 +1,8 @@
-# MultislitSimulator
-Simulates single-, double- and multislit interference patterns with specified light sources or natural light
+# Multislit Simulator
+A program which can simulate realistic single-, double- and n-slit interference patterns on a virtual screen. As far as I am aware, it is the only program which does it with a similar level of detail, "in 2d" or with the whole spectrum of visible light (which is an option in this program). And although it might still not be 100% physically accurate it is probably by far the most accurate simulation available anyways. But if you should have any idea on how to improve anything about it, let me know (create an issue, fork the project and create a pull request or message me directly).
+
+## Screenshot
+![Screenshot](https://github.com/stefan-baumann/MultislitSimulator/blob/master/MultislitSimulatorScreenshot.png)
+
+## The story behind this project
+This is a project which started a while back in school when dealing with the double-slit experiment in school. I thought it would be a nice idea to try and write a program which could simulate how the pattern of any single-, double- or n-slit could look and therefore started to work on a small-scale version of it. But it had a problems: It only simulated the result in the horizontal axis which meant that the rendering were more like graphs which visualized the horizontal distribution of the light intensity. Therefore I recently started working on a second version and took what I learned during the development of the first iteration to improve the quality from the start: The code is very clean, well-documented, everything is nicely organized and the UI turned out very nicely. And the most important improvement: **It now simulates the horizontal and the vertical axis to create 2d simulations.** 
