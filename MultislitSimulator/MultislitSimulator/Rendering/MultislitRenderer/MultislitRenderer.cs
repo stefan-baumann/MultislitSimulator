@@ -34,25 +34,12 @@ namespace MultislitSimulator.Rendering
         /// </summary>
         /// <param name="configuration">The multislit configuration.</param>
         /// <param name="size">The image size.</param>
-        /// <param name="scale">The scale.</param>
-        /// <returns>A rendering of the specified multislit configuration</returns>
-        public static Bitmap Render(MultislitConfiguration configuration, Size size, double scale)
-        {
-            return MultislitRenderer.Render(configuration, size, scale, 10);
-        }
-
-        /// <summary>
-        /// Renders an image of the specified multislit configuration.
-        /// </summary>
-        /// <param name="configuration">The multislit configuration.</param>
-        /// <param name="size">The image size.</param>
-        /// <param name="scale">The scale.</param>
         /// <param name="quality">The quality (higher is better).</param>
         /// <returns>A rendering of the specified multislit configuration</returns>
-        public static Bitmap Render(MultislitConfiguration configuration, Size size, double scale, int quality)
+        public static Bitmap Render(MultislitConfiguration configuration, Size size, int quality)
         {
-            double colorRadius = 1 / scale;
-            double[] yBrightnessFactors = MultislitRenderer.CalculateYBrightnessDistribution(configuration, size.Height, scale, colorRadius, quality);
+            double colorRadius = 1;
+            double[] yBrightnessFactors = MultislitRenderer.CalculateYBrightnessDistribution(configuration, size.Height);
 
             using (FastBitmap target = new FastBitmap(size, Color.FromArgb(10, 10, 10)))
             {
@@ -63,7 +50,7 @@ namespace MultislitSimulator.Rendering
                     {
                         for (int ix = i * chunkSize; ix < Math.Min(i * chunkSize + chunkSize, size.Width); ix++)
                         {
-                            double x = (ix - size.Width * 0.5) / scale;
+                            double x = (ix - size.Width * 0.5) / configuration.Scale;
                             RgbColor xColor = configuration.Brightness * MultislitRenderer.CalculateColorAt(configuration, x, colorRadius, quality);
 
                             for (int iy = 0; iy < size.Height; iy++)
@@ -107,16 +94,13 @@ namespace MultislitSimulator.Rendering
         /// </summary>
         /// <param name="configuration">The configuration.</param>
         /// <param name="height">The screen height.</param>
-        /// <param name="scale">The scale.</param>
-        /// <param name="radius">The analyzation radius.</param>
-        /// <param name="quality">The quality (higher is better).</param>
         /// <returns>The vertical brightness distribution.</returns>
-        private static double[] CalculateYBrightnessDistribution(MultislitConfiguration configuration, int height, double scale, double radius, int quality)
+        private static double[] CalculateYBrightnessDistribution(MultislitConfiguration configuration, int height)
         {
             double[] brightnessFactors = new double[height];
             for (int iy = 0; iy < height; iy++)
             {
-                double y = (iy - height * 0.5) / scale;
+                double y = (iy - height * 0.5) / configuration.Scale;
 
                 //This formula actually has no scientific base but it is damn close to the reality
                 double brightness = (10 / Math.Pow(1.25, Math.Abs(y / 2.5)));

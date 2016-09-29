@@ -20,7 +20,7 @@ namespace MultislitSimulator.Ui
     {
         public MultislitConfigurator()
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.LightModeComboBox.SelectedIndex = 0;
             this.RecreateConfiguration();
         }
@@ -36,7 +36,9 @@ namespace MultislitSimulator.Ui
         protected void RecreateConfiguration()
         {
             int slits = (int)this.SlitCountNumeric.Value;
-            double brightness = 1;
+            double scale = (double)this.ScaleNumeric.Value;
+            double brightness = (double)this.BrightnessNumeric.Value;
+
             IEnumerable<WavelengthColorPair> lightSources;
             if (this.LightModeComboBox.SelectedIndex == 0)
             {
@@ -49,7 +51,7 @@ namespace MultislitSimulator.Ui
                 lightSources = this.CreateCustomLightSource();
             }
 
-            this.Configuration = new Rendering.MultislitConfiguration(slits, brightness, lightSources);
+            this.Configuration = new MultislitConfiguration(slits, scale, brightness, lightSources);
 
             this.OnConfigurationChanged();
         }
@@ -100,11 +102,6 @@ namespace MultislitSimulator.Ui
             this.RecreateConfiguration();
         }
 
-        private void SlitCountNumeric_ValueChanged(object sender, EventArgs e)
-        {
-            this.RecreateConfiguration();
-        }
-
         private void AddLightSourceButton_Click(object sender, EventArgs e)
         {
             var selector = new LightColorSelector();
@@ -116,6 +113,21 @@ namespace MultislitSimulator.Ui
             };
 
             this.LightSourceFlowPanel.Controls.Add(selector);
+            this.RecreateConfiguration();
+        }
+
+        private void ScaleNumeric_ValueChanged(object sender, EventArgs e)
+        {
+            this.RecreateConfiguration();
+        }
+
+        private void BrightnessNumeric_ValueChanged(object sender, EventArgs e)
+        {
+            this.RecreateConfiguration();
+        }
+
+        private void SlitCountNumeric_ValueChanged(object sender, EventArgs e)
+        {
             this.RecreateConfiguration();
         }
     }

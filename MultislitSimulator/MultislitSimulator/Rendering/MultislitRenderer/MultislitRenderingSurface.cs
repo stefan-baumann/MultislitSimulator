@@ -28,7 +28,7 @@ namespace MultislitSimulator.Rendering
             this.BackColor = Color.FromArgb(10, 10, 10);
         }
 
-        private MultislitConfiguration configuration = new MultislitConfiguration(2, 1, Enumerable.Empty<WavelengthColorPair>());
+        private MultislitConfiguration configuration = new MultislitConfiguration(2, 1, 1, Enumerable.Empty<WavelengthColorPair>());
         /// <summary>
         /// Gets or sets the multislit configuration.
         /// </summary>

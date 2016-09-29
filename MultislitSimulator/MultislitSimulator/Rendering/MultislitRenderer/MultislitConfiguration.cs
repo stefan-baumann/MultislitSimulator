@@ -21,14 +21,16 @@ namespace MultislitSimulator.Rendering
     public class MultislitConfiguration
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MultislitConfiguration"/> class.
+        /// Initializes a new instance of the <see cref="MultislitConfiguration" /> class.
         /// </summary>
         /// <param name="slits">The slit count.</param>
+        /// <param name="scale">The display scale.</param>
         /// <param name="brightness">The overall brightness.</param>
         /// <param name="lightSources">The light sources.</param>
-        public MultislitConfiguration(int slits, double brightness, IEnumerable<WavelengthColorPair> lightSources)
+        public MultislitConfiguration(int slits, double scale, double brightness, IEnumerable<WavelengthColorPair> lightSources)
         {
             this.Slits = slits;
+            this.Scale = scale;
             this.Brightness = brightness;
             this.LightSources = lightSources;
         }
@@ -40,6 +42,14 @@ namespace MultislitSimulator.Rendering
         /// The amount of slits.
         /// </value>
         public int Slits { get; protected set; }
+
+        /// <summary>
+        /// Returns the display scale.
+        /// </summary>
+        /// <value>
+        /// The display scale.
+        /// </value>
+        public double Scale { get; protected set; }
 
         /// <summary>
         /// Returns the overall brightness.
@@ -56,21 +66,5 @@ namespace MultislitSimulator.Rendering
         /// The light sources.
         /// </value>
         public IEnumerable<WavelengthColorPair> LightSources { get; protected set; }
-
-        
-
-        public static bool operator ==(MultislitConfiguration left, MultislitConfiguration right)
-        {
-            if ((object)left == null)
-            {
-                return (object)right == null;
-            }
-            return (object)right != null && left.Slits == right.Slits && left.Brightness == right.Brightness && left.LightSources.SequenceEqual(right.LightSources);
-        }
-
-        public static bool operator !=(MultislitConfiguration left, MultislitConfiguration right)
-        {
-            return !(left == right);
-        }
     }
 }
