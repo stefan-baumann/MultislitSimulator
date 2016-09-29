@@ -36,6 +36,20 @@ namespace MultislitSimulator.Rendering
         protected abstract void Render(Graphics g);
 
         /// <summary>
+        /// Renders the content of this <see cref="RenderingSurfaceBase"/> to a bitmap.
+        /// </summary>
+        /// <returns>A bitmap with a rendering of the content of this <see cref="RenderingSurfaceBase"/>.</returns>
+        public Bitmap RenderToBitmap()
+        {
+            Bitmap result = new Bitmap(this.Width, this.Height);
+            using (Graphics g = Graphics.FromImage(result))
+            {
+                this.Render(g);
+            }
+            return result;
+        }
+
+        /// <summary>
         /// Paints this <see cref="RenderingSurfaceBase"/> to the screen.
         /// </summary>
         protected override void OnPaint(PaintEventArgs e)
@@ -44,9 +58,6 @@ namespace MultislitSimulator.Rendering
             using (BufferedGraphics g = BufferedGraphicsManager.Current.Allocate(e.Graphics, new Rectangle(Point.Empty, this.Size)))
             {
                 this.Render(g.Graphics);
-
-                //"Copyright notice" :P
-                g.Graphics.DrawString("Stefan Baumann", this.Font, Brushes.White, new Rectangle(Point.Empty, new Size(this.Width - 10, this.Height - 5)), new StringFormat() { Alignment = StringAlignment.Far, LineAlignment = StringAlignment.Far });
 
                 g.Render();
             }
