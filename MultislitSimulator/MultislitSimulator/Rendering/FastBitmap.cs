@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -46,7 +47,7 @@ namespace MultislitSimulator.Rendering
         {
             this.Width = width;
             this.Height = height;
-
+            
             this.InternalBitmap = new Bitmap(this.Width, this.Height, PixelFormat.Format24bppRgb);
             using (Graphics g = Graphics.FromImage(this.InternalBitmap))
             {
@@ -61,9 +62,51 @@ namespace MultislitSimulator.Rendering
         /// </summary>
         /// <param name="size">The size of the <see cref="FastBitmap"/> to be created.</param>
         /// <param name="background">The initial background color of this <see cref="FastBitmap"/>.</param>
-        public FastBitmap(Size size, Color color)
-            : this(size.Width, size.Height, color)
+        public FastBitmap(Size size, Color background)
+            : this(size.Width, size.Height, background)
         { }
+
+
+
+        /// <summary>
+        /// Internally used variable describing the byte layout in the 24bppRgb pixel format (if it is RGB or BGR)
+        /// </summary>
+        protected internal static readonly bool IsRgb;
+
+        /// <summary>
+        /// Statically initializes the <see cref="FastBitmap"/> class.
+        /// </summary>
+        /// <exception cref="Exception">Unable to detect bitmap pixel layout.</exception>
+        static unsafe FastBitmap()
+        {
+            //Check the byte layout in the 24bppRgb format
+            using (Bitmap bmp = new Bitmap(1, 1, PixelFormat.Format24bppRgb))
+            {
+                bmp.SetPixel(0, 0, Color.Red);
+                BitmapData data = bmp.LockBits(new Rectangle(0, 0, 1, 1), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+                byte* bmpPtr = (byte*)data.Scan0;
+
+                if (bmpPtr[0] == 0xFF)
+                {
+                    Debug.WriteLine("FastBitmap: RGB bitmap pixel layout detected.");
+                    FastBitmap.IsRgb = true;
+                }
+                else if (bmpPtr[2] == 0xFF)
+                {
+                    Debug.WriteLine("FastBitmap: BGR bitmap pixel layout detected.");
+                    FastBitmap.IsRgb = false;
+                }
+                else
+                {
+                    Debug.WriteLine("FastBitmap: Unable to detect bitmap pixel layout.");
+                    throw new Exception("Unable to detect bitmap pixel layout.");
+                }
+
+                bmp.UnlockBits(data);
+            }
+        }
+
+
 
         /// <summary>
         /// Gets or sets the width of this <see cref="FastBitmap"/>.
@@ -81,7 +124,7 @@ namespace MultislitSimulator.Rendering
         /// </value>
         public int Height { get; protected set; }
 
-        private object PixelAccessLock = new object();
+        private object pixelAccessLock = new object();
         /// <summary>
         /// Gets the <see cref="FastColor" /> value at the specified coordinates of this <see cref="FastBitmap" />.
         /// </summary>
@@ -113,8 +156,15 @@ namespace MultislitSimulator.Rendering
                         this.LockBitmap();
                     }
 
-                    FastColor* pointer = (FastColor*)((byte*)this.BitmapData.Scan0 + y * this.BitmapData.Stride + x * 3);
-                    return pointer[0];
+                    byte* pointer = ((byte*)this.BitmapData.Scan0 + y * this.BitmapData.Stride + x * 3);
+                    if (FastBitmap.IsRgb)
+                    {
+                        return new FastColor(pointer[2], pointer[1], pointer[0]);
+                    }
+                    else
+                    {
+                        return ((FastColor*)pointer)[0];
+                    }
                 }
             }
             set
@@ -134,9 +184,18 @@ namespace MultislitSimulator.Rendering
                     {
                         this.LockBitmap();
                     }
-
-                    FastColor* pointer = (FastColor*)((byte*)this.BitmapData.Scan0 + y * this.BitmapData.Stride + x * 3);
-                    pointer[0] = value;
+                    
+                    byte* pointer = ((byte*)this.BitmapData.Scan0 + y * this.BitmapData.Stride + x * 3);
+                    if (FastBitmap.IsRgb)
+                    {
+                        pointer[2] = value.R;
+                        pointer[1] = value.G;
+                        pointer[0] = value.B;
+                    }
+                    else
+                    {
+                        ((FastColor*)pointer)[0] = value;
+                    }
                 }
             }
         }
@@ -167,7 +226,7 @@ namespace MultislitSimulator.Rendering
         /// </value>
         protected internal BitmapData BitmapData { get; set; }
 
-        private object BitmapLockLockObject = new object();
+        private readonly object bitmapLockLockObject = new object();
 
         /// <summary>
         /// Locks the internal bitmap for access to its data.
@@ -176,7 +235,7 @@ namespace MultislitSimulator.Rendering
         {
             if (!this.Locked)
             {
-                lock (this.BitmapLockLockObject)
+                lock (this.bitmapLockLockObject)
                 {
                     if (!this.Locked)
                     {
@@ -199,7 +258,7 @@ namespace MultislitSimulator.Rendering
         {
             if (this.Locked)
             {
-                lock (this.BitmapLockLockObject)
+                lock (this.bitmapLockLockObject)
                 {
                     if (this.Locked)
                     {
@@ -248,7 +307,7 @@ namespace MultislitSimulator.Rendering
         /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
         protected virtual void Dispose(bool disposing)
         {
-            lock (this.BitmapLockLockObject)
+            lock (this.bitmapLockLockObject)
             {
                 if (!this.IsDisposed)
                 {
@@ -272,7 +331,7 @@ namespace MultislitSimulator.Rendering
         /// </summary>
         public void Dispose()
         {
-            Dispose(true);
+            this.Dispose(true);
         }
     }
 }

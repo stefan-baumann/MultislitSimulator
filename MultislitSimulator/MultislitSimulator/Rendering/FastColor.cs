@@ -16,7 +16,7 @@ namespace MultislitSimulator.Rendering
     /// <summary>
     /// Represents a color in the RGB colorspace.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
+    [StructLayout(LayoutKind.Explicit, Size = 3, Pack = 1)]
     public struct FastColor
     {
         /// <summary>
@@ -32,7 +32,7 @@ namespace MultislitSimulator.Rendering
             this.b = b;
         }
 
-        [FieldOffset(0)]
+        [FieldOffset(2)]
         private byte r;
         /// <summary>
         /// The red component value of this color.
@@ -66,7 +66,7 @@ namespace MultislitSimulator.Rendering
             }
         }
 
-        [FieldOffset(2)]
+        [FieldOffset(0)]
         private byte b;
         /// <summary>
         /// The blue component value of this color.
