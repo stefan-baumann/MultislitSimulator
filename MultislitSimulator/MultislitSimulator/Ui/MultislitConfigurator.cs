@@ -118,6 +118,7 @@ namespace MultislitSimulator.Ui
             {
                 this.LightSourceFlowPanel.Controls.Remove(selector);
                 this.RecreateConfiguration();
+                this.OnConfigurationChanged();
             };
 
             this.LightSourceFlowPanel.Controls.Add(selector);
