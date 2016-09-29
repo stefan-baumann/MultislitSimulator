@@ -29,7 +29,6 @@ namespace MultislitSimulator.Ui
                     AddExtension = true,
                     AutoUpgradeEnabled = true,
                     CheckPathExists = true,
-                    CreatePrompt = true,
                     DefaultExt = "png",
                     DereferenceLinks = true,
                     FileName = "Multislit Rendering.png",

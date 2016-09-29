@@ -113,7 +113,11 @@ namespace MultislitSimulator.Ui
         private void AddLightSourceButton_Click(object sender, EventArgs e)
         {
             var selector = new LightColorSelector();
-            selector.Updated += (s, a) => this.RecreateConfiguration();
+            selector.Updated += (s, a) =>
+            {
+                this.RecreateConfiguration();
+                this.OnConfigurationChanged();
+            };
             selector.Remove += (s, a) =>
             {
                 this.LightSourceFlowPanel.Controls.Remove(selector);
