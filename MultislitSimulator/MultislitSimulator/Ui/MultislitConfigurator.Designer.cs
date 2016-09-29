@@ -215,9 +215,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(6, 123);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(119, 13);
+            this.label5.Size = new System.Drawing.Size(124, 13);
             this.label5.TabIndex = 14;
-            this.label5.Text = "MultislitRenderer v1.0";
+            this.label5.Text = "Multislit Simulator v1.0";
             // 
             // EmailLinkLabel
             // 

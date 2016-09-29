@@ -93,7 +93,7 @@ namespace MultislitSimulator.Rendering
         /// <summary>
         /// Starts the re-rendering of the current simulation result.
         /// </summary>
-        protected void ReRender()
+        public void ReRender()
         {
             if (this.RenderThread != null && this.RenderThread.IsAlive)
             {

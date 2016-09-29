@@ -34,5 +34,10 @@ namespace MultislitSimulator.Ui
         {
             ImageSavingHelper.Save(this.RenderingSurface.RenderToBitmap());
         }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            this.RenderingSurface.ReRender();
+        }
     }
 }
