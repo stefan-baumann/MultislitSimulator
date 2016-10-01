@@ -59,8 +59,15 @@ namespace MultislitSimulator.Rendering
                                 {
                                     return;
                                 }
-                                
-                                target[ix, iy] = yBrightnessFactors[iy] * xColor;
+
+                                if (configuration.DisplayDistribution)
+                                {
+                                    target[ix, iy] = xColor;
+                                }
+                                else
+                                {
+                                    target[ix, iy] = yBrightnessFactors[iy] * xColor;
+                                }
                             }
                         }
                     });
@@ -96,7 +103,14 @@ namespace MultislitSimulator.Rendering
                                     return;
                                 }
 
-                                target[ix, iy] = yBrightnessFactors[iy] * xColor;
+                                if (configuration.DisplayDistribution)
+                                {
+                                    target[ix, iy] = xColor;
+                                }
+                                else
+                                {
+                                    target[ix, iy] = yBrightnessFactors[iy] * xColor;
+                                }
                             }
                         }
 

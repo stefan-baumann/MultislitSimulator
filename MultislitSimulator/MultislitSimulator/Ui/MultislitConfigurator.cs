@@ -60,7 +60,7 @@ namespace MultislitSimulator.Ui
                 lightSources = this.CreateCustomLightSource();
             }
 
-            this.Configuration = new MultislitConfiguration(slits, scale, brightness, lightSources);
+            this.Configuration = new MultislitConfiguration(slits, false, scale, brightness, lightSources);
         }
 
         protected IEnumerable<WavelengthColorPair> CreateVisibleLightSource(int quality)

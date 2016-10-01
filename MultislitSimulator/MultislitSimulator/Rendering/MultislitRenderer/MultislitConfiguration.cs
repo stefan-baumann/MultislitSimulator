@@ -24,12 +24,14 @@ namespace MultislitSimulator.Rendering
         /// Initializes a new instance of the <see cref="MultislitConfiguration" /> class.
         /// </summary>
         /// <param name="slits">The slit count.</param>
+        /// <param name="displayDistribution">A bool determining whether the intensity distribution or a realistic image is rendered; <c>false</c> is the default value.</param>
         /// <param name="scale">The display scale.</param>
         /// <param name="brightness">The overall brightness.</param>
         /// <param name="lightSources">The light sources.</param>
-        public MultislitConfiguration(int slits, double scale, double brightness, IEnumerable<WavelengthColorPair> lightSources)
+        public MultislitConfiguration(int slits, bool displayDistribution, double scale, double brightness, IEnumerable<WavelengthColorPair> lightSources)
         {
             this.Slits = slits;
+            this.DisplayDistribution = displayDistribution;
             this.Scale = scale;
             this.Brightness = brightness;
             this.LightSources = lightSources;
@@ -42,6 +44,14 @@ namespace MultislitSimulator.Rendering
         /// The amount of slits.
         /// </value>
         public int Slits { get; protected internal set; }
+
+        /// <summary>
+        /// Returns a bool determining whether the intensity distribution is shown or a realistic image is rendered.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if the intensity distribution is shown; otherwise, <c>false</c> (a realistic image is rendered).
+        /// </value>
+        public bool DisplayDistribution { get; protected internal set; }
 
         /// <summary>
         /// Returns the display scale.

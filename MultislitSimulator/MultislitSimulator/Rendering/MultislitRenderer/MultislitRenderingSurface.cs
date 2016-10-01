@@ -28,7 +28,7 @@ namespace MultislitSimulator.Rendering
             this.BackColor = Color.FromArgb(10, 10, 10);
         }
 
-        private MultislitConfiguration configuration = new MultislitConfiguration(2, 1, 1, Enumerable.Empty<WavelengthColorPair>());
+        private MultislitConfiguration configuration = new MultislitConfiguration(2, true, 1, 1, Enumerable.Empty<WavelengthColorPair>());
         /// <summary>
         /// Gets or sets the multislit configuration.
         /// </summary>
@@ -132,7 +132,7 @@ namespace MultislitSimulator.Rendering
         /// <returns>The current rendering of the simulation.</returns>
         protected virtual Bitmap RenderInternal()
         {
-            return MultislitRenderer.Render(this.configuration, this.Size, 4);
+            return MultislitRenderer.Render(this.configuration, this.Size, 5);
         }
 
 
